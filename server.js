@@ -29,6 +29,24 @@ app.get('/get-words', (req, res) => {
     });
 });
 
+app.get('/get-words-after/:id', (req, res) => {
+    const { id } = req.params;
+    const limit = 100; // Počet záznamov, ktoré sa majú vrátiť
+
+    const query = `
+        SELECT * FROM slovicka 
+        WHERE id > ? 
+        ORDER BY id ASC 
+        LIMIT ?
+    `;
+
+    db.all(query, [id, limit], (err, rows) => {
+        if (err) {
+            return res.status(500).send('failed to load data');
+        }
+        res.status(200).json(rows);
+    });
+});
 app.listen(PORT, () => {
     console.log(`Server runs on port ${PORT}`);
 });
