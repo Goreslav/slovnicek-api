@@ -30,6 +30,34 @@ app.get('/slovicka', (req, res) => {
     });
 });
 
+app.get('/naplnit', (req, res) => {
+    const insertQuery = 'INSERT INTO slovicka (word, translation, description) VALUES (?, ?, ?)';
+    let totalEntries = 10000; // počet iterácií
+    let insertedCount = 0; // počítadlo vložených záznamov
+
+    for (let i = 1; i <= totalEntries; i++) {
+        const word = `auto ${i}`;
+        const translation = `car ${i}`;
+        const description = `This is a car number ${i}`;
+
+        db.run(insertQuery, [word, translation, description], (err) => {
+            if (err) {
+                console.error('Chyba pri vkladaní do databázy', err);
+                return res.status(500).send('Chyba pri plnení databázy');
+            }
+
+            // Počítame úspešné vloženia
+            insertedCount++;
+
+            // Ak sme vložili všetky záznamy, odošleme odpoveď
+            if (insertedCount === totalEntries) {
+                res.status(200).send('Databáza bola úspešne naplnená');
+            }
+        });
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server beží na porte ${PORT}`);
 });

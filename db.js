@@ -13,8 +13,9 @@ const db = new sqlite3.Database(dbPath, (err) => {
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS slovicka (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        slovo TEXT NOT NULL,
-        preklad TEXT NOT NULL
+        word TEXT NOT NULL,
+        translation TEXT NOT NULL,
+        description TEXT NOT NULL
     )`);
 });
 
