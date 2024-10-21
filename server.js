@@ -31,7 +31,7 @@ app.get('/get-words', (req, res) => {
 
 app.get('/get-words-after/:id', (req, res) => {
     const { id } = req.params;
-    const limit = 100; // Počet záznamov, ktoré sa majú vrátiť
+    const limit = 100;
 
     const query = `
         SELECT * FROM slovicka 
