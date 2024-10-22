@@ -11,19 +11,14 @@ Pred začiatkom je potrebné mať nainštalované nasledovné:
 
 ## Inštalácia
 
-
-1.Prejdite do adresára projektu:
-```
-cd slovnicek-api
-```
     
-2.Nainštalujte potrebné závislosti:
+1.Nainštalujte potrebné závislosti:
 ```
   pnpm install
 ```
   
 
-3 Spustenie servera
+2 Spustenie servera
 ```
     node server.js
 ```
