@@ -22,7 +22,7 @@ app.post('/create-entry', (req, res) => {
 });
 
 app.get('/get-words', (req, res) => {
-    db.all('SELECT * FROM slovicka ORDER BY id ASC', [], (err, rows) => {
+    db.all('SELECT * FROM slovicka ORDER BY id DESC', [], (err, rows) => {
         if (err) {
             return res.status(500).send('failed to load data');
         }
