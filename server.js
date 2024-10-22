@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const PORT = 3333;
 const db = require('./db');
 app.use(express.json());
-
+app.use(cors());
 app.post('/create-entry', (req, res) => {
     const { word, translation, description } = req.body;
 
@@ -29,24 +30,18 @@ app.get('/get-words', (req, res) => {
     });
 });
 
-app.get('/get-words-after/:id', (req, res) => {
+app.delete('/delete-word/:id', (req, res) => {
     const { id } = req.params;
-    const limit = 100;
+    const query = 'DELETE FROM slovicka WHERE id = ?';
 
-    const query = `
-        SELECT * FROM slovicka 
-        WHERE id > ? 
-        ORDER BY id ASC 
-        LIMIT ?
-    `;
-
-    db.all(query, [id, limit], (err, rows) => {
+    db.run(query, id, function(err) {
         if (err) {
-            return res.status(500).send('failed to load data');
+            return res.status(500).send('Failed to delete word');
         }
-        res.status(200).json(rows);
+        res.status(200).send({ success: true });
     });
 });
+
 app.listen(PORT, () => {
     console.log(`Server runs on port ${PORT}`);
 });
